@@ -1,5 +1,3 @@
-"use client";
-
 import MaxWidthWrapper from "@/components/organisms/MaxWidthWrapper";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { CheckCircle, Leaf, Truck } from "lucide-react";
@@ -53,7 +51,7 @@ export default function Home() {
             {perks.map((perk)=>(
               <div key={perk.name} className="text-center md:flex md:items-start md:text-left lg:block lg:text-center">
                 <div className="md:flex-shrink-0 flex justify-center">
-                  <div className="h-16 w-16 items-center justify-center rounded-full bg-blue-100 text-blue-900">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 text-blue-900">
                     {<perk.Icon className="w-1/3 h-1/3"/>}
                   </div>
                 </div>
