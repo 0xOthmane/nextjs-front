@@ -4,9 +4,10 @@ import NavItems from "../molecules/NavItems";
 import { buttonVariants } from "../ui/button";
 import Link from "next/link";
 import Cart from "./Cart";
+import UserAccountNav from "../atoms/UserAccountNav";
 
 const NavBar = () => {
-  const user = null;
+  const user = true;
 
   return (
     <div className="bg-white sticky z-50 top-0 inset-x-0 h-16">
@@ -37,7 +38,7 @@ const NavBar = () => {
                     <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
                   )}
                   {user ? (
-                    <p></p>
+                    <UserAccountNav />
                   ) : (
                     <Link
                       href="/sign-up"
