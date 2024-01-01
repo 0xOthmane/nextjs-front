@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import { TRegisterSchema } from "@/types/auth";
 import { registerSchema } from "@/lib/validators/register-validator";
 import { useMutation } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 
 const Login = () => {
   const searchParams = useSearchParams();
@@ -39,6 +40,7 @@ const Login = () => {
   });
 
   const { mutate: signIn, isPending } = useMutation({
+    mutationFn: (registerForm: TRegisterSchema) => api.register(registerForm),
     onSuccess: async () => {
       toast.success("Signed in successfully");
 
@@ -57,7 +59,7 @@ const Login = () => {
       router.push("/");
     },
     onError: (err) => {
-      if (err.message ) {
+      if (err.message) {
         toast.error("Invalid email or password.");
       }
     },
@@ -125,8 +127,8 @@ const Login = () => {
                   )}
                 </div>
 
-                <Button disabled={isLoading}>
-                  {isLoading && (
+                <Button disabled={isPending}>
+                  {isPending && (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   )}
                   Sign in
@@ -152,7 +154,7 @@ const Login = () => {
               <Button
                 onClick={continueAsBuyer}
                 variant="secondary"
-                disabled={isLoading}
+                disabled={isPending}
               >
                 Continue as customer
               </Button>
@@ -160,7 +162,7 @@ const Login = () => {
               <Button
                 onClick={continueAsSeller}
                 variant="secondary"
-                disabled={isLoading}
+                disabled={isPending}
               >
                 Continue as seller
               </Button>

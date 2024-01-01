@@ -5,15 +5,17 @@ import { Loader2, XCircle } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { buttonVariants } from '../ui/button'
+import { api } from '@/lib/api'
 
 interface VerifyEmailProps {
   token: string
 }
 
 const VerifyEmail = ({ token }: VerifyEmailProps) => {
-  const { data, isLoading, isError } =
+  const { isLoading, isError, isSuccess } =
     useQuery({
-      token,
+      queryKey: ['token', token],
+      queryFn: ()=>api.verifyEmail()
     })
 
   if (isError) {
@@ -31,12 +33,12 @@ const VerifyEmail = ({ token }: VerifyEmailProps) => {
     )
   }
 
-  if (data?.success) {
+  if (isSuccess) {
     return (
       <div className='flex h-full flex-col items-center justify-center'>
         <div className='relative mb-4 h-60 w-60 text-muted-foreground'>
           <Image
-            src='/hippo-email-sent.png'
+            src='/nav/mixed.png'
             fill
             alt='the email was sent'
           />

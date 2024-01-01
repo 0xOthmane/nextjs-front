@@ -11,8 +11,15 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema } from "@/lib/validators/register-validator";
 import { TRegisterSchema } from "@/types/auth";
+import { useMutation } from "@tanstack/react-query";
+import { api } from "@/lib/api";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { ZodError } from "zod";
 
 const Register = () => {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -21,8 +28,25 @@ const Register = () => {
     resolver: zodResolver(registerSchema),
   });
 
+  const { mutate, isPending } = useMutation({
+    mutationFn: (registerForm: TRegisterSchema) => api.register(registerForm),
+    onSuccess: (response) => {
+      toast.success(`Verification email sent to ${response.data}.`);
+      router.push("/verify-email?to=" + response.data);
+    },
+    onError: (err) => {
+      if (err instanceof ZodError) {
+        toast.error(err.issues[0].message);
+
+        return;
+      }
+
+      toast.error("Something went wrong. Please try again.");
+    },
+  });
+
   const onSubmit = ({ email, password }: TRegisterSchema) => {
-    // TODO: Send payload to backend
+    mutate({ email, password });
   };
 
   return (
@@ -70,7 +94,9 @@ const Register = () => {
                 href="/login"
                 className={buttonVariants({
                   variant: "link",
-                  className: "gap-1.5",
+                  className: cn("gap-1.5",{
+                    isPending: 'pointer-events-none'
+                  }),
                 })}
               >
                 Sign in
