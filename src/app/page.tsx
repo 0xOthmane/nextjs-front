@@ -1,3 +1,4 @@
+import ProductReel from "@/components/organisms/ProductReel";
 import MaxWidthWrapper from "@/components/organisms/MaxWidthWrapper";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { CheckCircle, Leaf, Truck } from "lucide-react";
@@ -43,7 +44,7 @@ export default function Home() {
             <Button variant="ghost">Our quality promise</Button>
           </div>
         </div>
-        {/** TODO List Products */}
+        <ProductReel title="Brand new"/>
       </MaxWidthWrapper>
       <section className="border-t border-gray-200 bg-gray-50">
         <MaxWidthWrapper className="py-20">

@@ -7,5 +7,8 @@ export const api = {
   },
   verifyEmail: async () => {
     return axios.post('')
+  },
+  getProducts: async () => {
+    return axios.get('')
   }
 };
